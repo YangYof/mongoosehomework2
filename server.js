@@ -32,7 +32,6 @@ const listenRequest = async(req,res)=>{
         req.on('end', async()=>{
             try{
                 const data = JSON.parse(body)
-                console.log(data);
                 const newPosts = await Post.create({
                         name: data.name,
                         tags: data.tags,
@@ -65,9 +64,13 @@ const listenRequest = async(req,res)=>{
                 const posts = await Post.findByIdAndUpdate({
                     "_id":id
                 },{
-                    "name": data.name,
-                    "price": data.price,
-                    "rating": data.rating
+                    name: data.name,
+                    tags: data.tags,
+                    type: data.type,
+                    image:data.image,
+                    content: data.content,
+                    likes: data.likes,
+                    comments: data.comments
                 });
                 res.writeHead(200, headers);
                 res.write(JSON.stringify({
